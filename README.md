@@ -1,70 +1,87 @@
-# Getting Started with Create React App
+# Blockchain Library Management System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A decentralized library management system built on blockchain technology. The system allows users to register, borrow, and return books, while administrators can add and manage the book inventory.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Blockchain-based**: All transactions are stored on the blockchain for transparency and security
+- **User Registration**: Users can register to the system
+- **Book Management**: Admins can add, update, and manage books
+- **Borrowing System**: Users can borrow and return books
+- **Real-time Updates**: All changes are reflected in real-time on the blockchain
 
-### `npm start`
+## Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Frontend**: React.js, Tailwind CSS
+- **Blockchain**: Ethereum, Solidity
+- **Web3 Integration**: ethers.js
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Prerequisites
 
-### `npm test`
+- Node.js (v14 or later)
+- NPM or Yarn
+- MetaMask browser extension
+- Access to an Ethereum network (local, testnet, or mainnet)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Setup and Installation
 
-### `npm run build`
+1. **Clone the repository**:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+git clone <repository-url>
+cd blockchain-library-management
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. **Install dependencies**:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm install
+```
 
-### `npm run eject`
+3. **Compile and deploy the smart contract**:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+You need to compile and deploy the Solidity smart contract `LibraryManagement.sol` to your chosen Ethereum network using tools like Truffle, Hardhat, or Remix.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+4. **Update contract address and ABI**:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+After deploying the smart contract, update the contract address and ABI in `src/utils/contract.js`.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+5. **Start the development server**:
 
-## Learn More
+```bash
+npm start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+6. **Build for production**:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+npm run build
+```
 
-### Code Splitting
+## Usage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1. **Connect your MetaMask wallet** to the application
+2. **Register** as a library user
+3. **Browse available books** and borrow them
+4. **Return books** when you're done reading
+5. **Admins** can add new books and manage inventory
 
-### Analyzing the Bundle Size
+## Smart Contract Functions
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- `registerUser()`: Register a new user
+- `addBook(title, author, copies)`: Add a new book (admin only)
+- `updateBook(bookId, title, author, copies)`: Update book details (admin only)
+- `borrowBook(bookId)`: Borrow a book
+- `returnBook(bookId)`: Return a borrowed book
+- `getAllBooks()`: Get all available books
+- `getUserBorrowings()`: Get user's borrowing history
 
-### Making a Progressive Web App
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-### Advanced Configuration
+## Acknowledgments
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Ethereum community
+- React.js and Tailwind CSS community
+- All contributors to this project

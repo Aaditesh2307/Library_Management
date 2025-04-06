@@ -1,23 +1,26 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import { BlockchainProvider } from './context/BlockchainContext';
+import Library from './components/Library';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="min-h-screen bg-gray-100">
+      <BlockchainProvider>
+        <div className="container mx-auto px-4 py-8">
+          <header className="mb-8">
+            <h1 className="text-3xl font-bold text-center text-gray-800">
+              Blockchain Library Management System
+            </h1>
+          </header>
+          <main>
+            <Library />
+          </main>
+          <footer className="mt-12 text-center text-gray-600 text-sm">
+            <p>© {new Date().getFullYear()} Blockchain Library Management System</p>
+          </footer>
+        </div>
+      </BlockchainProvider>
     </div>
   );
 }
