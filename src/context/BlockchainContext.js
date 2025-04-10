@@ -25,12 +25,37 @@ export const BlockchainProvider = ({ children }) => {
         setLoading(true);
         setError(null);
         
-        // Initialize contract
-        const result = await initializeContract();
+        // Check if we recently disconnected - if so, don't auto-connect
+        const disconnectedAt = localStorage.getItem('disconnectedAt');
+        const wasRecentlyDisconnected = disconnectedAt && 
+          (Date.now() - parseInt(disconnectedAt)) < 1000 * 60 * 10; // 10 minutes
+        
+        if (wasRecentlyDisconnected) {
+          console.log("Recently disconnected - not auto-connecting");
+          setLoading(false);
+          setConnected(false);
+          return;
+        }
+        
+        // Check if we just connected successfully (from connect wallet page)
+        const connectSuccessful = localStorage.getItem('connectSuccessful');
+        const shouldConnect = localStorage.getItem('shouldConnect') === 'true';
+        
+        // If we just successfully connected, use force connect
+        const useForceConnect = connectSuccessful === 'true' || shouldConnect;
+        
+        // Attempt to connect
+        const result = await initializeContract(useForceConnect);
         
         if (result.success) {
+          console.log("Blockchain connection successful");
           setConnected(true);
           setUserAddress(result.userAddress);
+          
+          // Clear connection successful flag if it exists
+          if (connectSuccessful === 'true') {
+            localStorage.removeItem('connectSuccessful');
+          }
           
           // Check if user is registered
           const registered = await isUserRegistered();
@@ -44,7 +69,13 @@ export const BlockchainProvider = ({ children }) => {
           const allBooks = await fetchAllBooks();
           setBooks(allBooks);
         } else {
-          setError(result.error);
+          console.log("Not connecting:", result.error);
+          setConnected(false);
+          
+          // Don't set an error if user hasn't connected yet
+          if (result.error !== 'Not connected - manual connection required') {
+            setError(result.error);
+          }
         }
       } catch (err) {
         setError(err.message);
@@ -60,14 +91,31 @@ export const BlockchainProvider = ({ children }) => {
     if (window.ethereum) {
       window.ethereum.on('accountsChanged', accounts => {
         if (accounts.length > 0) {
-          // Reload the page when account changes
-          window.location.reload();
+          // Don't reload - just update state and check registration
+          init();
         } else {
           setConnected(false);
           setUserAddress('');
+          localStorage.removeItem('shouldConnect');
+          // Force reload to ensure clean state
+          window.location.reload();
         }
       });
+      
+      // Listen for chain changes
+      window.ethereum.on('chainChanged', () => {
+        // Always reload on chain changes to prevent state inconsistency
+        window.location.reload();
+      });
     }
+    
+    // Cleanup listeners on unmount
+    return () => {
+      if (window.ethereum) {
+        window.ethereum.removeListener('accountsChanged', () => {});
+        window.ethereum.removeListener('chainChanged', () => {});
+      }
+    };
   }, []);
 
   // Refresh books list
