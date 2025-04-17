@@ -2,6 +2,8 @@
 
 A decentralized library management system built on blockchain technology. The system allows users to register, borrow, and return books, while administrators can add and manage the book inventory.
 
+https://drive.google.com/file/d/1h0ZUAufHUjoLsp012oa4wgdNkPJEq6Rd/view?usp=sharing
+
 ## Features
 
 - **Blockchain-based**: All transactions are stored on the blockchain for transparency and security
